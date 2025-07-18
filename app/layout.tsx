@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
+import { Toaster } from 'sonner';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -42,7 +43,6 @@ export const metadata: Metadata = {
     description:
       'Full-stack developer specializing in React, Next.js, and TypeScript.',
   },
-  generator: 'v0.dev',
 };
 
 export default function RootLayout({
@@ -60,6 +60,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

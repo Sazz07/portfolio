@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 const contactInfo = [
   {
@@ -64,23 +65,41 @@ export function ContactMinimal() {
     subject: '',
     message: '',
   });
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // Reset form and show success
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    // Reset success message after 5 seconds
-    setTimeout(() => setIsSubmitted(false), 5000);
+  const validate = () => {
+    let valid = true;
+    const newErrors = { name: '', email: '', subject: '', message: '' };
+    if (!formData.name) {
+      newErrors.name = 'Name is required';
+      valid = false;
+    }
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+      valid = false;
+    } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email address';
+      valid = false;
+    }
+    if (!formData.subject) {
+      newErrors.subject = 'Subject is required';
+      valid = false;
+    }
+    if (!formData.message) {
+      newErrors.message = 'Message is required';
+      valid = false;
+    } else if (formData.message.length < 10) {
+      newErrors.message = 'Message must be at least 10 characters';
+      valid = false;
+    }
+    setErrors(newErrors);
+    return valid;
   };
 
   const handleChange = (
@@ -90,6 +109,30 @@ export function ContactMinimal() {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+    setErrors((prev) => ({ ...prev, [e.target.name]: '' }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('http://localhost:5000/api/v1/contacts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error('Failed to send message');
+      toast.success(
+        "Message sent! Thank you for your message. I'll get back to you soon."
+      );
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setErrors({ name: '', email: '', subject: '', message: '' });
+    } catch {
+      toast.error('Failed to send message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -211,24 +254,7 @@ export function ContactMinimal() {
               className='bg-background/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 lg:p-8'
             >
               {/* Success Message */}
-              {isSubmitted && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className='mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center gap-3'
-                >
-                  <CheckCircle className='h-5 w-5 text-green-600 dark:text-green-400' />
-                  <div>
-                    <p className='font-medium text-green-800 dark:text-green-200'>
-                      Message sent successfully!
-                    </p>
-                    <p className='text-sm text-green-600 dark:text-green-400'>
-                      I'll get back to you within 24 hours.
-                    </p>
-                  </div>
-                </motion.div>
-              )}
+              {/* Removed success message as it's now handled by sonner toast */}
 
               <form onSubmit={handleSubmit} className='space-y-6'>
                 <div className='grid sm:grid-cols-2 gap-6'>
@@ -250,9 +276,20 @@ export function ContactMinimal() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className='h-12 border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-foreground transition-colors duration-300 px-0'
+                      aria-invalid={!!errors.name}
+                      className={`h-12 border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all duration-300 px-0 ${
+                        errors.name
+                          ? 'border-destructive focus:border-destructive'
+                          : ''
+                      }`}
                       placeholder='Your full name'
+                      autoComplete='name'
                     />
+                    {errors.name && (
+                      <p className='text-destructive text-xs mt-1'>
+                        {errors.name}
+                      </p>
+                    )}
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -273,12 +310,22 @@ export function ContactMinimal() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className='h-12 border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-foreground transition-colors duration-300 px-0'
+                      aria-invalid={!!errors.email}
+                      className={`h-12 border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all duration-300 px-0 ${
+                        errors.email
+                          ? 'border-destructive focus:border-destructive'
+                          : ''
+                      }`}
                       placeholder='your.email@example.com'
+                      autoComplete='email'
                     />
+                    {errors.email && (
+                      <p className='text-destructive text-xs mt-1'>
+                        {errors.email}
+                      </p>
+                    )}
                   </motion.div>
                 </div>
-
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -297,11 +344,21 @@ export function ContactMinimal() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className='h-12 border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-foreground transition-colors duration-300 px-0'
+                    aria-invalid={!!errors.subject}
+                    className={`h-12 border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all duration-300 px-0 ${
+                      errors.subject
+                        ? 'border-destructive focus:border-destructive'
+                        : ''
+                    }`}
                     placeholder="What's this about?"
+                    autoComplete='off'
                   />
+                  {errors.subject && (
+                    <p className='text-destructive text-xs mt-1'>
+                      {errors.subject}
+                    </p>
+                  )}
                 </motion.div>
-
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -321,11 +378,21 @@ export function ContactMinimal() {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className='border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-foreground resize-none transition-colors duration-300 px-0'
+                    aria-invalid={!!errors.message}
+                    className={`border-0 border-b-2 border-border/30 rounded-none bg-transparent focus:border-primary focus:ring-2 focus:ring-primary/30 resize-none transition-all duration-300 px-0 min-h-[120px] ${
+                      errors.message
+                        ? 'border-destructive focus:border-destructive'
+                        : ''
+                    }`}
                     placeholder='Tell me about your project, ideas, or just say hello...'
+                    autoComplete='off'
                   />
+                  {errors.message && (
+                    <p className='text-destructive text-xs mt-1'>
+                      {errors.message}
+                    </p>
+                  )}
                 </motion.div>
-
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -336,24 +403,19 @@ export function ContactMinimal() {
                 >
                   <Button
                     type='submit'
-                    disabled={isSubmitting || isSubmitted}
-                    className='w-full h-12 bg-foreground text-background hover:bg-foreground/90 transition-all duration-300 disabled:opacity-50'
+                    disabled={isSubmitting}
+                    className='w-full h-12 bg-foreground text-background hover:bg-foreground/90 transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-2'
                   >
                     {isSubmitting ? (
-                      <div className='flex items-center gap-2'>
+                      <>
                         <div className='w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin' />
                         <span>Sending...</span>
-                      </div>
-                    ) : isSubmitted ? (
-                      <div className='flex items-center gap-2'>
-                        <CheckCircle className='h-4 w-4' />
-                        <span>Message Sent!</span>
-                      </div>
+                      </>
                     ) : (
-                      <div className='flex items-center gap-2'>
+                      <>
                         <Send className='h-4 w-4' />
                         <span>Send Message</span>
-                      </div>
+                      </>
                     )}
                   </Button>
                 </motion.div>
