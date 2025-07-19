@@ -56,17 +56,17 @@ export function AboutGrid() {
                 className='space-y-6'
               >
                 <p className='text-base lg:text-lg text-muted-foreground leading-relaxed'>
-                  I'm a full-stack developer with over 2 years of experience
-                  building robust, scalable web applications. My journey spans
-                  from local startups in Bangladesh to international teams in
-                  Finland, where I've contributed to AI-powered platforms and
-                  enterprise solutions.
+                  I&apos;m a full-stack developer with over 2 years of
+                  experience building robust, scalable web applications. My
+                  journey spans from local startups in Bangladesh to
+                  international teams in Finland, where I&apos;ve contributed to
+                  AI-powered platforms and enterprise solutions.
                 </p>
                 <p className='text-base lg:text-lg text-muted-foreground leading-relaxed'>
                   I believe in writing clean, maintainable code and creating
                   user experiences that are both functional and delightful.
                   Every project is an opportunity to learn something new and
-                  push the boundaries of what's possible.
+                  push the boundaries of what&apos;s possible.
                 </p>
               </motion.div>
 

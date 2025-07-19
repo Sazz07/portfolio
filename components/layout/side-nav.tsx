@@ -19,15 +19,55 @@ import {
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
+// Generalized navItems for context-aware navigation and future extensibility
 const navItems = [
-  { icon: Home, label: 'Home', href: '#home' },
-  { icon: User, label: 'About', href: '#about' },
-  { icon: Briefcase, label: 'Work', href: '#experience' },
-  { icon: Code, label: 'Skills', href: '#skills' },
-  { icon: FolderOpen, label: 'Projects', href: '#projects' },
-  { icon: GraduationCap, label: 'Education', href: '#education' },
-  { icon: Mail, label: 'Contact', href: '#contact' },
+  { icon: Home, label: 'Home', href: '/' },
+  {
+    icon: User,
+    label: 'About',
+    section: 'about',
+    sectionHref: '/#about',
+    href: '/#about',
+  },
+  {
+    icon: Briefcase,
+    label: 'Work',
+    section: 'experience',
+    sectionHref: '/#experience',
+    href: '/#experience',
+  },
+  {
+    icon: Code,
+    label: 'Skills',
+    section: 'skills',
+    sectionHref: '/#skills',
+    href: '/#skills',
+  },
+  {
+    icon: FolderOpen,
+    label: 'Projects',
+    section: 'projects',
+    sectionHref: '/#projects',
+    href: '/projects',
+  },
+  {
+    icon: GraduationCap,
+    label: 'Educations',
+    section: 'educations',
+    sectionHref: '/#educations',
+    href: '/#educations',
+  },
+  {
+    icon: Mail,
+    label: 'Contact',
+    section: 'contact',
+    sectionHref: '/#contact',
+    href: '/#contact',
+  },
+  // Example for future Blog section/page
+  // { icon: BlogIcon, label: 'Blog', section: 'blog', sectionHref: '/#blog', href: '/blog' },
 ];
 
 export function SideNav() {
@@ -35,16 +75,20 @@ export function SideNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Only track section scroll on home page
   useEffect(() => {
+    if (pathname !== '/') return;
     const handleScroll = () => {
-      const sections = navItems.map((item) => item.href.substring(1));
+      const sections = navItems
+        .filter((item) => typeof item.section === 'string')
+        .map((item) => item.section as string);
       const scrollPosition = window.scrollY + 100;
-
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -59,17 +103,30 @@ export function SideNav() {
         }
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
-  const handleNavClick = (href: string) => {
+  // Generalized context-aware navigation
+  const handleNavClick = (item: (typeof navItems)[0]) => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (item.section && item.sectionHref && item.href !== '/') {
+      if (pathname === '/') {
+        // On home, scroll to section
+        const el = document.getElementById(item.section);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.location.hash = `#${item.section}`;
+        }
+      } else {
+        // On other pages, go to the page (e.g., /projects, /blog)
+        window.location.href = item.href;
+      }
+      return;
     }
+    // For Home or other direct links
+    window.location.href = item.href;
   };
 
   return (
@@ -94,33 +151,48 @@ export function SideNav() {
 
         {/* Navigation Items */}
         <div className='flex flex-col gap-4 flex-1'>
-          {navItems.map((item, index) => (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <button
-                onClick={() => handleNavClick(item.href)}
-                className={`relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group ${
-                  activeSection === item.href.substring(1)
-                    ? 'bg-foreground text-background shadow-lg'
-                    : 'hover:bg-muted text-muted-foreground hover:text-foreground'
-                }`}
+          {navItems.map((item, index) => {
+            // SSR-safe active logic
+            let isActive = false;
+            if (item.section && item.sectionHref && item.href !== '/') {
+              if (pathname === '/') {
+                // Only use activeSection (set by scroll effect)
+                isActive = activeSection === item.section;
+              } else {
+                isActive = pathname.startsWith(item.href);
+              }
+            } else if (item.href === '/') {
+              isActive = pathname === '/';
+            } else {
+              isActive = pathname.startsWith(item.href);
+            }
+            return (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <item.icon className='h-5 w-5' />
-
-                {/* Tooltip */}
-                <div className='absolute left-16 bg-foreground text-background px-3 py-2 rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shadow-lg transform translate-x-2 group-hover:translate-x-0'>
-                  {item.label}
-                  <div className='absolute left-0 top-1/2 w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-foreground transform -translate-x-1 -translate-y-1/2' />
-                </div>
-              </button>
-            </motion.div>
-          ))}
+                <button
+                  onClick={() => handleNavClick(item)}
+                  className={`relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group ${
+                    isActive
+                      ? 'bg-foreground text-background shadow-lg'
+                      : 'hover:bg-muted text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  <item.icon className='h-5 w-5' />
+                  {/* Tooltip */}
+                  <div className='absolute left-16 bg-foreground text-background px-3 py-2 rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shadow-lg transform translate-x-2 group-hover:translate-x-0'>
+                    {item.label}
+                    <div className='absolute left-0 top-1/2 w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-foreground transform -translate-x-1 -translate-y-1/2' />
+                  </div>
+                </button>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Bottom Actions */}
@@ -163,7 +235,9 @@ export function SideNav() {
             <Button
               variant='ghost'
               size='sm'
-              onClick={() => window.open('/resume.pdf', '_blank')}
+              onClick={() =>
+                window.open('/Md.Sazzad_Hossain_resume.pdf', '_blank')
+              }
               className='w-12 h-12 rounded-xl hover:bg-muted transition-colors duration-300'
             >
               <Download className='h-5 w-5' />
@@ -235,7 +309,7 @@ export function SideNav() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.3, delay: index * 0.1 }}
-                        onClick={() => handleNavClick(item.href)}
+                        onClick={() => handleNavClick(item)}
                         className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ${
                           activeSection === item.href.substring(1)
                             ? 'bg-foreground text-background'
@@ -266,7 +340,9 @@ export function SideNav() {
                     </Button>
                     <Button
                       variant='outline'
-                      onClick={() => window.open('/resume.pdf', '_blank')}
+                      onClick={() =>
+                        window.open('/Md.Sazzad_Hossain_resume.pdf', '_blank')
+                      }
                       className='w-full justify-start gap-3'
                     >
                       <Download className='h-5 w-5' />

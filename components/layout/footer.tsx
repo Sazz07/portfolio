@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Mail, Heart } from 'lucide-react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const navigation = [
   { name: 'About', href: '#about' },
@@ -14,12 +15,12 @@ const socialLinks = [
   {
     name: 'GitHub',
     href: 'https://github.com/sazzadhossain',
-    icon: Github,
+    icon: FaGithub,
   },
   {
     name: 'LinkedIn',
     href: 'https://linkedin.com/in/sazzadhossain',
-    icon: Linkedin,
+    icon: FaLinkedin,
   },
   {
     name: 'Email',

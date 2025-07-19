@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink,
-  Github,
   ArrowRight,
   Calendar,
   Code,
@@ -18,6 +17,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import Link from 'next/link';
 import { projectsData, statusLabels, statusColors } from '@/lib/projects-data';
+import { FaGithub } from 'react-icons/fa';
 
 export function ProjectsModern() {
   const [selectedProject, setSelectedProject] = useState(0);
@@ -74,8 +74,8 @@ export function ProjectsModern() {
         </motion.div>
 
         {/* Main Content */}
-        <div className='grid lg:grid-cols-12 gap-8 lg:gap-12 mb-16'>
-          {/* Project Navigation */}
+        <div className='grid lg:grid-cols-12 gap-8 lg:gap-16 mb-16 items-start'>
+          {/* Project Navigation (Left Column) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -150,7 +150,7 @@ export function ProjectsModern() {
             ))}
           </motion.div>
 
-          {/* Project Display */}
+          {/* Project Display (Right Column) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -206,7 +206,7 @@ export function ProjectsModern() {
                           href={featuredProjects[selectedProject].githubUrl}
                           target='_blank'
                         >
-                          <Github className='size-4 mr-2' />
+                          <FaGithub className='size-4 mr-2' />
                           Code
                         </Link>
                       )}
@@ -326,7 +326,7 @@ export function ProjectsModern() {
                             href={featuredProjects[selectedProject].githubUrl}
                             target='_blank'
                           >
-                            <Github className='h-4 w-4 mr-2' />
+                            <FaGithub className='h-4 w-4 mr-2' />
                             Source Code
                           </Link>
                         </Button>

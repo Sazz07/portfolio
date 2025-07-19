@@ -8,12 +8,12 @@ import {
   Grid,
   List,
   ExternalLink,
-  Github,
   Zap,
   Calendar,
   Code,
   Layers,
 } from 'lucide-react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -42,7 +42,7 @@ export default function ProjectsPage() {
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'year' | 'title' | 'updated'>('updated');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   const filteredProjects = useMemo(() => {
     const filtered = projectsData.filter((project) => {
@@ -136,8 +136,8 @@ export default function ProjectsPage() {
               className='text-muted-foreground text-lg max-w-2xl leading-relaxed'
             >
               A comprehensive collection of my work, showcasing various
-              technologies and solutions I've built over the years. Each project
-              represents a unique challenge and learning experience.
+              technologies and solutions I&apos;ve built over the years. Each
+              project represents a unique challenge and learning experience.
             </motion.p>
           </div>
         </motion.div>
@@ -426,7 +426,7 @@ export default function ProjectsPage() {
                               target='_blank'
                               rel='noopener noreferrer'
                             >
-                              <Github className='h-4 w-4 mr-2' />
+                              <FaGithub className='h-4 w-4 mr-2' />
                               Code
                             </Link>
                           </Button>
@@ -511,7 +511,7 @@ export default function ProjectsPage() {
                                     target='_blank'
                                     rel='noopener noreferrer'
                                   >
-                                    <Github className='h-4 w-4 mr-2' />
+                                    <FaGithub className='h-4 w-4 mr-2' />
                                     Source
                                   </Link>
                                 </Button>

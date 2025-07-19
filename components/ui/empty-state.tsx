@@ -60,7 +60,7 @@ export function EmptyState({
   };
 
   const config = variants[variant];
-  const Icon = config.icon;
+  // const Icon = config.icon;
 
   return (
     <motion.div

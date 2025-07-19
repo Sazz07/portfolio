@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { ArrowDown, Mail, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 export function MinimalHero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -45,36 +46,6 @@ export function MinimalHero() {
       className='min-h-screen flex items-center justify-center px-6 lg:px-12 relative overflow-hidden'
     >
       {/* Clean, minimal background */}
-      <div className='absolute inset-0 -z-10'>
-        {/* Subtle gradient overlay */}
-        <div className='absolute inset-0 bg-gradient-to-br from-background via-background to-muted/10' />
-
-        {/* Single elegant floating element */}
-        <motion.div
-          animate={{
-            y: [-20, 20, -20],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: 'easeInOut',
-          }}
-          className='absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-r from-foreground/3 to-transparent rounded-full blur-3xl'
-        />
-
-        {/* Subtle grid pattern */}
-        <div
-          className='absolute inset-0 opacity-[0.015]'
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '80px 80px',
-          }}
-        />
-      </div>
 
       {/* Very subtle cursor effect - only render after mount */}
       {mounted && (
@@ -114,7 +85,7 @@ export function MinimalHero() {
               transition={{ delay: 0.3, duration: 0.8 }}
               className='text-sm font-mono text-muted-foreground tracking-wider'
             >
-              Hello, I'm
+              Hello, I&apos;m
             </motion.div>
 
             <motion.h1
@@ -197,13 +168,13 @@ export function MinimalHero() {
           >
             {[
               {
-                icon: Github,
-                href: 'https://github.com/sazzadhossain',
+                icon: FaGithub,
+                href: 'https://github.com/sazz07',
                 label: 'GitHub',
               },
               {
-                icon: Linkedin,
-                href: 'https://linkedin.com/in/sazzadhossain',
+                icon: FaLinkedin,
+                href: 'https://www.linkedin.com/in/md-sazzad-hossain-sazz',
                 label: 'LinkedIn',
               },
               {

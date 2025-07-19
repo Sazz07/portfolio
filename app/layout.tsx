@@ -3,6 +3,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
+import { SideNav } from '@/components/layout/side-nav';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -59,7 +60,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SideNav />
+          <div className='ml-0 lg:ml-20'>{children}</div>
           <Toaster />
         </ThemeProvider>
       </body>

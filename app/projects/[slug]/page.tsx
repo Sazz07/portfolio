@@ -5,16 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
   ExternalLink,
-  Github,
   Calendar,
-  Users,
-  Clock,
   ChevronLeft,
   ChevronRight,
   Zap,
-  Target,
   Code,
-  Layers,
   CheckCircle,
   Play,
   Star,
@@ -41,13 +36,13 @@ import {
   statusLabels,
   statusColors,
   formatDate,
-  Project,
 } from '@/lib/projects-data';
 import { notFound, useParams } from 'next/navigation';
+import { FaGithub } from 'react-icons/fa';
 
 export default function ProjectDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const { slug } = useParams();
   const project = getProjectBySlug(slug as string);
 
@@ -71,9 +66,9 @@ export default function ProjectDetailPage() {
     );
   };
 
-  const getAllTechFromProject = (project: Project) => {
-    return Object.values(project.techStack).flat();
-  };
+  // const getAllTechFromProject = (project: Project) => {
+  //   return Object.values(project.techStack).flat();
+  // };
 
   if (isLoading) {
     return (
@@ -237,7 +232,7 @@ export default function ProjectDetailPage() {
                         target='_blank'
                         rel='noopener noreferrer'
                       >
-                        <Github className='h-5 w-5 mr-2 group-hover:scale-110 transition-transform' />
+                        <FaGithub className='h-5 w-5 mr-2 group-hover:scale-110 transition-transform' />
                         View Source Code
                       </Link>
                     </Button>

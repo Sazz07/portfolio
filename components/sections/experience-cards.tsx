@@ -52,7 +52,7 @@ const experiences = [
       'Dashboard Development',
       'E-commerce',
     ],
-    companyUrl: 'https://repliq.co',
+    companyUrl: 'https://www.repliq.dev',
   },
 ];
 
