@@ -52,7 +52,7 @@ export function ProjectsModern() {
           </motion.div>
 
           <h2 className='text-4xl lg:text-6xl font-bold mb-6'>
-            Selected
+            Featured
             <br />
             <span className='bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>
               Projects
@@ -102,7 +102,7 @@ export function ProjectsModern() {
                         selectedProject === index
                           ? 'text-foreground'
                           : 'text-muted-foreground group-hover:text-foreground'
-                      }`}
+                      } `}
                     >
                       {project.title}
                     </h3>
@@ -232,9 +232,12 @@ export function ProjectsModern() {
                     <div>
                       <div className='flex items-start justify-between mb-4'>
                         <div>
-                          <h3 className='text-2xl font-bold mb-2'>
+                          <Link
+                            href={featuredProjects[selectedProject].slug}
+                            className='text-2xl font-bold mb-2 hover:text-blue-600 transition-colors'
+                          >
                             {featuredProjects[selectedProject].title}
-                          </h3>
+                          </Link>
                           {featuredProjects[selectedProject].subtitle && (
                             <p className='text-muted-foreground'>
                               {featuredProjects[selectedProject].subtitle}

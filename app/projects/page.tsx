@@ -166,7 +166,13 @@ export default function ProjectsPage() {
                 variant={viewMode === 'grid' ? 'default' : 'outline'}
                 size='sm'
                 onClick={() => setViewMode('grid')}
-                className='bg-background/50 backdrop-blur-sm'
+                aria-label='Grid view'
+                className={
+                  viewMode === 'grid'
+                    ? 'bg-primary text-background'
+                    : 'bg-background/50 text-muted-foreground hover:text-foreground'
+                }
+                title='Grid view'
               >
                 <Grid className='h-4 w-4' />
               </Button>
@@ -174,7 +180,13 @@ export default function ProjectsPage() {
                 variant={viewMode === 'list' ? 'default' : 'outline'}
                 size='sm'
                 onClick={() => setViewMode('list')}
-                className='bg-background/50 backdrop-blur-sm'
+                aria-label='List view'
+                className={
+                  viewMode === 'list'
+                    ? 'bg-primary text-background'
+                    : 'bg-background/50 text-muted-foreground hover:text-foreground'
+                }
+                title='List view'
               >
                 <List className='h-4 w-4' />
               </Button>
