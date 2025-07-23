@@ -28,6 +28,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -101,7 +102,7 @@ export default function ProjectDetailPage() {
   }, [isFullscreen, nextImage, prevImage, closeFullscreen]);
 
   const getAllTechFromProject = (project: Project) => {
-    return Object.values(project.techStack).flat();
+    return Object.values(project.techStack).flat().filter(Boolean);
   };
 
   if (isLoading) {
@@ -605,8 +606,9 @@ export default function ProjectDetailPage() {
                   </CardHeader>
                   <CardContent>
                     <div className='space-y-8'>
-                      {Object.entries(project.techStack).map(
-                        ([category, technologies]) => (
+                      {Object.entries(project.techStack)
+                        .filter(([_, technologies]) => technologies.length > 0)
+                        .map(([category, technologies]) => (
                           <div key={category} className='space-y-4'>
                             <h4 className='font-semibold text-lg capitalize flex items-center gap-2'>
                               <div className='w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500' />
@@ -636,7 +638,14 @@ export default function ProjectDetailPage() {
                               )}
                             </div>
                           </div>
-                        )
+                        ))}
+                      {Object.values(project.techStack).every(
+                        (arr) => arr.length === 0
+                      ) && (
+                        <div className='text-center py-8 text-muted-foreground'>
+                          <Code className='h-12 w-12 mx-auto mb-4 opacity-50' />
+                          <p>No technology stack information available</p>
+                        </div>
                       )}
                     </div>
                   </CardContent>
@@ -751,59 +760,141 @@ export default function ProjectDetailPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     whileHover={{ y: -8, scale: 1.02 }}
-                    className='group'
+                    className='group h-full'
                   >
-                    <Card className='h-full hover:shadow-xl transition-all duration-500 overflow-hidden bg-gradient-to-br from-background to-muted/20 border-border/50 hover:border-border'>
-                      <div className='relative overflow-hidden'>
+                    <Card className='h-full flex flex-col hover:shadow-xl transition-all duration-500 bg-background/50 backdrop-blur-sm border-border/50 overflow-hidden'>
+                      <div className='relative overflow-hidden flex-shrink-0'>
                         <Link href={`/projects/${relatedProject.slug}`}>
                           <Image
                             src={
                               relatedProject.featuredImage || '/placeholder.svg'
                             }
                             alt={relatedProject.title}
-                            width={400}
-                            height={200}
-                            className='w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500'
+                            width={600}
+                            height={400}
+                            className='w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500'
                           />
-                          <div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+                          <motion.div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
                         </Link>
-                        <div className='absolute top-3 right-3'>
+                        <div className='absolute top-4 right-4 flex gap-2'>
                           <Badge
                             className={statusColors[relatedProject.status]}
-                            variant='secondary'
                           >
                             {statusLabels[relatedProject.status]}
                           </Badge>
                         </div>
+                        <div className='absolute top-4 left-4'>
+                          <Badge
+                            variant='outline'
+                            className='bg-background/80 backdrop-blur-sm shadow-lg'
+                          >
+                            {relatedProject.category}
+                          </Badge>
+                        </div>
                       </div>
-                      <CardHeader>
-                        <CardTitle className='group-hover:text-blue-600 transition-colors line-clamp-1'>
-                          <Link href={`/projects/${relatedProject.slug}`}>
-                            {relatedProject.title}
-                          </Link>
-                        </CardTitle>
-                        {relatedProject.subtitle && (
-                          <CardDescription className='line-clamp-1'>
-                            {relatedProject.subtitle}
-                          </CardDescription>
-                        )}
-                      </CardHeader>
-                      <CardContent>
-                        <p className='text-sm text-muted-foreground line-clamp-2 mb-4'>
-                          {relatedProject.description}
-                        </p>
-                        <div className='flex items-center justify-between'>
-                          <Badge variant='outline' className='text-xs'>
+
+                      <CardHeader className='flex-shrink-0'>
+                        <div className='flex items-start justify-between'>
+                          <div className='min-w-0 flex-1'>
+                            <CardTitle className='group-hover:text-blue-600 transition-colors line-clamp-2'>
+                              <Link
+                                href={`/projects/${relatedProject.slug}`}
+                                className='md:text-2xl'
+                              >
+                                {relatedProject.title}
+                              </Link>
+                            </CardTitle>
+                            {relatedProject.subtitle && (
+                              <CardDescription className='mt-1 line-clamp-1'>
+                                {relatedProject.subtitle}
+                              </CardDescription>
+                            )}
+                          </div>
+                          <Badge
+                            variant='outline'
+                            className='text-xs ml-2 flex-shrink-0'
+                          >
+                            <Calendar className='h-3 w-3 mr-1' />
                             {relatedProject.year}
                           </Badge>
-                          <Link
-                            href={`/projects/${relatedProject.slug}`}
-                            className='text-sm text-blue-600 hover:text-blue-700 font-medium group-hover:underline transition-all duration-300 hover:translate-x-1'
-                          >
-                            View Project →
-                          </Link>
+                        </div>
+                      </CardHeader>
+
+                      <CardContent className='space-y-4 flex-1 flex flex-col'>
+                        <p className='text-sm text-muted-foreground leading-relaxed line-clamp-3 flex-1'>
+                          {relatedProject.description}
+                        </p>
+
+                        {/* Tech Stack Preview */}
+                        <div className='space-y-2'>
+                          <div className='flex items-center gap-1 text-xs text-muted-foreground'>
+                            <Code className='h-3 w-3' />
+                            <span>Tech Stack</span>
+                          </div>
+                          <div className='flex flex-wrap gap-1'>
+                            {getAllTechFromProject(relatedProject)
+                              .slice(0, 3)
+                              .map((tech) => (
+                                <Badge
+                                  key={tech}
+                                  variant='outline'
+                                  className='text-xs'
+                                >
+                                  {tech}
+                                </Badge>
+                              ))}
+                            {getAllTechFromProject(relatedProject).length >
+                              3 && (
+                              <Badge variant='outline' className='text-xs'>
+                                +
+                                {getAllTechFromProject(relatedProject).length -
+                                  3}
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                       </CardContent>
+
+                      <CardFooter className='flex gap-2 flex-shrink-0'>
+                        <Button
+                          variant='outline'
+                          size='sm'
+                          asChild
+                          className='flex-1 bg-transparent'
+                        >
+                          <Link
+                            href={relatedProject.liveUrl}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            <ExternalLink className='h-4 w-4 mr-2' />
+                            Live
+                          </Link>
+                        </Button>
+                        {relatedProject.githubUrl && (
+                          <Button
+                            variant='outline'
+                            size='sm'
+                            asChild
+                            className='flex-1 bg-transparent'
+                          >
+                            <Link
+                              href={relatedProject.githubUrl}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                            >
+                              <FaGithub className='h-4 w-4 mr-2' />
+                              Code
+                            </Link>
+                          </Button>
+                        )}
+                        <Button size='sm' asChild className='flex-1'>
+                          <Link href={`/projects/${relatedProject.slug}`}>
+                            <Zap className='h-4 w-4 mr-2' />
+                            Details
+                          </Link>
+                        </Button>
+                      </CardFooter>
                     </Card>
                   </motion.div>
                 ))}
@@ -862,7 +953,7 @@ export default function ProjectDetailPage() {
                     whileHover={{ scale: 1.1, x: -4 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={prevImage}
-                    className='absolute left-4 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 text-black'
+                    className='absolute left-4 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 text-white'
                     aria-label='Previous image'
                   >
                     <ChevronLeft className='h-8 w-8' />
@@ -871,7 +962,7 @@ export default function ProjectDetailPage() {
                     whileHover={{ scale: 1.1, x: 4 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={nextImage}
-                    className='absolute right-4 top-1/2 transform -translate-y-1/2 size-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center  hover:bg-white/20 transition-all duration-300 text-black'
+                    className='absolute right-4 top-1/2 transform -translate-y-1/2 size-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 text-white'
                     aria-label='Next image'
                   >
                     <ChevronRight className='h-8 w-8' />

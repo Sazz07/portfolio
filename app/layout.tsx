@@ -12,11 +12,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Sazzad Hossain - Full-Stack Developer',
+  title: 'Md. Sazzad Hossain - Full-Stack Developer',
   description:
     'Full-stack developer with 2+ years of experience building scalable web applications. Specializing in React, Next.js, TypeScript, and Node.js.',
   keywords: [
-    'Sazzad Hossain',
+    'Md. Sazzad Hossain',
     'Full-Stack Developer',
     'React Developer',
     'Next.js',
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     'JavaScript',
     'Bangladesh Developer',
   ].join(', '),
-  authors: [{ name: 'Sazzad Hossain' }],
-  creator: 'Sazzad Hossain',
+  authors: [{ name: 'Md. Sazzad Hossain' }],
+  creator: 'Md. Sazzad Hossain',
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: 'Sazzad Hossain - Full-Stack Developer',
     description:
       'Full-stack developer specializing in React, Next.js, and TypeScript.',
-    siteName: 'Sazzad Hossain Portfolio',
+    siteName: 'Md. Sazzad Hossain Portfolio',
   },
   twitter: {
     card: 'summary_large_image',

@@ -43,10 +43,8 @@ export function MinimalHero() {
   return (
     <section
       id='home'
-      className='min-h-screen flex items-center justify-center px-6 lg:px-12 relative overflow-hidden'
+      className='min-h-screen flex items-center justify-center px-6 pt-2 md:pt-0 lg:px-12 relative overflow-hidden'
     >
-      {/* Clean, minimal background */}
-
       {/* Very subtle cursor effect - only render after mount */}
       {mounted && (
         <motion.div

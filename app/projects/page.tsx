@@ -11,9 +11,8 @@ import {
   Zap,
   Calendar,
   Code,
-  Layers,
 } from 'lucide-react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -59,6 +58,7 @@ export default function ProjectsPage() {
 
       const matchesCategory =
         selectedCategory === 'all' || project.categoryId === selectedCategory;
+
       const matchesStatus =
         selectedStatus === 'all' || project.status === selectedStatus;
 
@@ -81,7 +81,7 @@ export default function ProjectsPage() {
   }, [searchTerm, selectedCategory, selectedStatus, sortBy]);
 
   const getAllTechFromProject = (project: (typeof projectsData)[0]) => {
-    return Object.values(project.techStack).flat();
+    return Object.values(project.techStack).flat().filter(Boolean);
   };
 
   const clearFilters = () => {
@@ -160,7 +160,6 @@ export default function ProjectsPage() {
                 className='pl-10 bg-background/50 backdrop-blur-sm border-border/50'
               />
             </div>
-
             <div className='flex items-center gap-2'>
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'outline'}
@@ -311,7 +310,7 @@ export default function ProjectsPage() {
                             alt={project.title}
                             width={600}
                             height={400}
-                            className='w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500'
+                            className='w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-500'
                           />
                           <motion.div className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
                         </Link>
@@ -362,7 +361,7 @@ export default function ProjectsPage() {
                           {project.description}
                         </p>
 
-                        {/* Tech Stack */}
+                        {/* Tech Stack Preview */}
                         <div className='space-y-2'>
                           <div className='flex items-center gap-1 text-xs text-muted-foreground'>
                             <Code className='h-3 w-3' />
@@ -370,7 +369,7 @@ export default function ProjectsPage() {
                           </div>
                           <div className='flex flex-wrap gap-1'>
                             {getAllTechFromProject(project)
-                              .slice(0, 4)
+                              .slice(0, 3)
                               .map((tech) => (
                                 <Badge
                                   key={tech}
@@ -380,33 +379,12 @@ export default function ProjectsPage() {
                                   {tech}
                                 </Badge>
                               ))}
-                            {getAllTechFromProject(project).length > 4 && (
+                            {getAllTechFromProject(project).length > 3 && (
                               <Badge variant='outline' className='text-xs'>
-                                +{getAllTechFromProject(project).length - 4}
+                                +{getAllTechFromProject(project).length - 3}
                               </Badge>
                             )}
                           </div>
-                        </div>
-
-                        {/* Features Preview */}
-                        <div className='space-y-2'>
-                          <div className='flex items-center gap-1 text-xs text-muted-foreground'>
-                            <Layers className='h-3 w-3' />
-                            <span>Key Features</span>
-                          </div>
-                          <ul className='text-xs text-muted-foreground space-y-1'>
-                            {project.features.slice(0, 2).map((feature, i) => (
-                              <li key={i} className='flex items-start gap-2'>
-                                <div className='w-1 h-1 bg-blue-600 rounded-full mt-1.5 flex-shrink-0' />
-                                <span className='line-clamp-1'>{feature}</span>
-                              </li>
-                            ))}
-                            {project.features.length > 2 && (
-                              <li className='text-xs text-muted-foreground/70'>
-                                +{project.features.length - 2} more features
-                              </li>
-                            )}
-                          </ul>
                         </div>
                       </CardContent>
 
@@ -443,7 +421,6 @@ export default function ProjectsPage() {
                             </Link>
                           </Button>
                         )}
-
                         <Button size='sm' asChild className='flex-1'>
                           <Link href={`/projects/${project.slug}`}>
                             <Zap className='h-4 w-4 mr-2' />
@@ -463,9 +440,9 @@ export default function ProjectsPage() {
                             <Image
                               src={project.featuredImage || '/placeholder.svg'}
                               alt={project.title}
-                              width={200}
-                              height={120}
-                              className='w-48 h-28 object-cover rounded-lg hover:scale-105 transition-transform duration-300'
+                              width={256}
+                              height={144}
+                              className='w-64 h-36 object-cover rounded-lg hover:scale-105 transition-transform duration-300'
                             />
                           </Link>
                           <div className='flex-1 space-y-3'>

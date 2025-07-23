@@ -97,8 +97,9 @@ export default function NotFound() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className='text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed'
             >
-              The page you're looking for seems to have wandered off into the
-              digital void. Don't worry though, let's get you back on track!
+              The page you&apos;re looking for seems to have wandered off into
+              the digital void. Don&apos;t worry though, let&apos;s get you back
+              on track!
             </motion.p>
           </motion.div>
 
@@ -229,12 +230,12 @@ export default function NotFound() {
                 </motion.div>
 
                 <h3 className='text-xl font-semibold mb-4'>
-                  Still can't find what you're looking for?
+                  Still can&apos;t find what you&apos;re looking for?
                 </h3>
 
                 <p className='text-muted-foreground mb-6'>
-                  Feel free to reach out! I'm always happy to help or discuss
-                  potential opportunities.
+                  Feel free to reach out! I&apos;m always happy to help or
+                  discuss potential opportunities.
                 </p>
 
                 <div className='flex justify-center gap-4'>
