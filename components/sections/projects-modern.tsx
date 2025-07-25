@@ -26,7 +26,7 @@ export function ProjectsModern() {
   const featuredProjects = projectsData.slice(0, 3);
 
   const getAllTechFromProject = (project: (typeof projectsData)[0]) => {
-    return Object.values(project.techStack).flat();
+    return Object.values(project.techStack).flat().filter(Boolean);
   };
 
   return (
@@ -102,7 +102,7 @@ export function ProjectsModern() {
                         selectedProject === index
                           ? 'text-foreground'
                           : 'text-muted-foreground group-hover:text-foreground'
-                      } `}
+                      }`}
                     >
                       {project.title}
                     </h3>
@@ -167,18 +167,20 @@ export function ProjectsModern() {
                 transition={{ duration: 0.5 }}
                 className='space-y-6'
               >
-                {/* Project Image */}
+                {/* Project Image - Fixed Size */}
                 <div className='relative group overflow-hidden rounded-2xl bg-muted/20'>
-                  <Image
-                    src={
-                      featuredProjects[selectedProject].featuredImage ||
-                      '/placeholder.svg'
-                    }
-                    alt={featuredProjects[selectedProject].title}
-                    width={800}
-                    height={500}
-                    className='w-full h-auto transition-transform duration-500 group-hover:scale-105'
-                  />
+                  <div className='aspect-video w-full'>
+                    <Image
+                      src={
+                        featuredProjects[selectedProject].featuredImage ||
+                        '/placeholder.svg'
+                      }
+                      alt={featuredProjects[selectedProject].title}
+                      width={800}
+                      height={450}
+                      className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+                    />
+                  </div>
 
                   {/* Overlay with actions */}
                   <div className='absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4'>
@@ -195,22 +197,22 @@ export function ProjectsModern() {
                         Live Demo
                       </Link>
                     </Button>
-                    <Button
-                      variant='outline'
-                      size='sm'
-                      asChild
-                      className='bg-white/90 border-white/90 text-black hover:bg-white'
-                    >
-                      {featuredProjects[selectedProject].githubUrl && (
+                    {featuredProjects[selectedProject].githubUrl && (
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        asChild
+                        className='bg-white/90 border-white/90 text-black hover:bg-white'
+                      >
                         <Link
                           href={featuredProjects[selectedProject].githubUrl}
                           target='_blank'
                         >
-                          <FaGithub className='size-4 mr-2' />
+                          <FaGithub className='h-4 w-4 mr-2' />
                           Code
                         </Link>
-                      )}
-                    </Button>
+                      </Button>
+                    )}
                   </div>
 
                   {/* Status badge */}
@@ -233,7 +235,7 @@ export function ProjectsModern() {
                       <div className='flex items-start justify-between mb-4'>
                         <div>
                           <Link
-                            href={featuredProjects[selectedProject].slug}
+                            href={`/projects/${featuredProjects[selectedProject].slug}`}
                             className='text-2xl font-bold mb-2 hover:text-blue-600 transition-colors'
                           >
                             {featuredProjects[selectedProject].title}
@@ -334,7 +336,6 @@ export function ProjectsModern() {
                           </Link>
                         </Button>
                       )}
-
                       <Button variant='outline' asChild>
                         <Link
                           href={`/projects/${featuredProjects[selectedProject].slug}`}
