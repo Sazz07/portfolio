@@ -23,7 +23,13 @@ import { usePathname } from 'next/navigation';
 
 // Generalized navItems for context-aware navigation and future extensibility
 const navItems = [
-  { icon: Home, label: 'Home', href: '/' },
+  {
+    icon: Home,
+    label: 'Home',
+    section: 'home',
+    sectionHref: '/#home',
+    href: '/',
+  },
   {
     icon: User,
     label: 'About',
@@ -77,6 +83,13 @@ export function SideNav() {
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
+  // Set initial active section based on pathname
+  useEffect(() => {
+    if (pathname === '/') {
+      setActiveSection('home');
+    }
+  }, [pathname]);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -89,6 +102,14 @@ export function SideNav() {
         .filter((item) => typeof item.section === 'string')
         .map((item) => item.section as string);
       const scrollPosition = window.scrollY + 100;
+
+      // Check if we're at the very top (home section)
+      if (scrollPosition < 200) {
+        setActiveSection('home');
+        return;
+      }
+
+      // Check other sections
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -110,7 +131,7 @@ export function SideNav() {
   // Generalized context-aware navigation
   const handleNavClick = (item: (typeof navItems)[0]) => {
     setIsMobileMenuOpen(false);
-    if (item.section && item.sectionHref && item.href !== '/') {
+    if (item.section && item.sectionHref) {
       if (pathname === '/') {
         // On home, scroll to section
         const el = document.getElementById(item.section);
@@ -125,7 +146,7 @@ export function SideNav() {
       }
       return;
     }
-    // For Home or other direct links
+    // For direct links without sections
     window.location.href = item.href;
   };
 
@@ -154,15 +175,13 @@ export function SideNav() {
           {navItems.map((item, index) => {
             // SSR-safe active logic
             let isActive = false;
-            if (item.section && item.sectionHref && item.href !== '/') {
+            if (item.section && item.sectionHref) {
               if (pathname === '/') {
                 // Only use activeSection (set by scroll effect)
                 isActive = activeSection === item.section;
               } else {
                 isActive = pathname.startsWith(item.href);
               }
-            } else if (item.href === '/') {
-              isActive = pathname === '/';
             } else {
               isActive = pathname.startsWith(item.href);
             }
@@ -311,7 +330,7 @@ export function SideNav() {
                         transition={{ duration: 0.3, delay: index * 0.1 }}
                         onClick={() => handleNavClick(item)}
                         className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ${
-                          activeSection === item.href.substring(1)
+                          activeSection === item.section
                             ? 'bg-foreground text-background'
                             : 'hover:bg-muted text-muted-foreground hover:text-foreground'
                         }`}
