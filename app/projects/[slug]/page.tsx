@@ -336,10 +336,11 @@ export default function ProjectDetailPage() {
               Project Gallery
             </h3>
 
-            <div className='grid lg:grid-cols-3 gap-6'>
-              {/* Main Image */}
-              <div className='lg:col-span-2'>
-                <div className='relative group overflow-hidden rounded-2xl bg-muted/20 border border-border/30 hover:border-border/60 transition-all duration-300'>
+            <div className='flex flex-col lg:grid lg:grid-cols-3 gap-6'>
+              {/* Main Image and Thumbnails */}
+              <div className='lg:col-span-2 flex flex-col'>
+                {/* Main Image */}
+                <div className='aspect-[16/9] w-full relative rounded-2xl overflow-hidden bg-muted/20 border border-border/30 hover:border-border/60 transition-all duration-300'>
                   <AnimatePresence mode='wait'>
                     <motion.div
                       key={currentImageIndex}
@@ -347,7 +348,7 @@ export default function ProjectDetailPage() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.4 }}
-                      className='aspect-video bg-muted/10 flex items-center justify-center relative'
+                      className='w-full h-full flex items-center justify-center relative'
                     >
                       {imageLoading && (
                         <div className='absolute inset-0 flex items-center justify-center bg-muted/20'>
@@ -361,58 +362,54 @@ export default function ProjectDetailPage() {
                         }`}
                         width={1200}
                         height={675}
-                        className='w-full h-full object-cover hover:object-contain transition-all duration-500 cursor-zoom-in'
+                        className='w-full h-full object-cover transition-all duration-500 cursor-zoom-in rounded-2xl'
                         priority
                         onLoad={() => setImageLoading(false)}
                         onClick={openFullscreen}
                       />
+                      {/* Navigation Arrows */}
+                      {allImages.length > 1 && (
+                        <>
+                          <motion.button
+                            whileHover={{ scale: 1.1, x: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={prevImage}
+                            className='absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 bg-white/90 hover:bg-white text-black rounded-full flex items-center justify-center shadow-xl z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 border border-gray-200'
+                            aria-label='Previous image'
+                          >
+                            <ChevronLeft className='h-6 w-6' />
+                          </motion.button>
+                          <motion.button
+                            whileHover={{ scale: 1.1, x: 2 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={nextImage}
+                            className='absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 bg-white/90 hover:bg-white text-black rounded-full flex items-center justify-center shadow-xl z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 border border-gray-200'
+                            aria-label='Next image'
+                          >
+                            <ChevronRight className='h-6 w-6' />
+                          </motion.button>
+                        </>
+                      )}
+                      {/* Fullscreen button */}
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={openFullscreen}
+                        className='absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 bg-black/70 hover:bg-black/90 text-white rounded-full flex items-center justify-center z-10 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 border border-gray-200'
+                        aria-label='View fullscreen'
+                      >
+                        <Maximize2 className='h-5 w-5' />
+                      </motion.button>
+                      {/* Image Counter */}
+                      <div className='absolute bottom-2 right-2 bg-black/80 text-white px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm'>
+                        {currentImageIndex + 1} / {allImages.length}
+                      </div>
                     </motion.div>
                   </AnimatePresence>
-
-                  {/* Navigation Arrows */}
-                  {allImages.length > 1 && (
-                    <>
-                      <motion.button
-                        whileHover={{ scale: 1.1, x: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={prevImage}
-                        className='absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white shadow-xl z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black'
-                        aria-label='Previous image'
-                      >
-                        <ChevronLeft className='h-6 w-6 text-black' />
-                      </motion.button>
-                      <motion.button
-                        whileHover={{ scale: 1.1, x: 2 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={nextImage}
-                        className='absolute right-4 top-1/2 transform -translate-y-1/2 size-12 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white shadow-xl z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black'
-                        aria-label='Next image'
-                      >
-                        <ChevronRight className='h-6 w-6 text-black' />
-                      </motion.button>
-                    </>
-                  )}
-
-                  {/* Fullscreen button */}
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={openFullscreen}
-                    className='absolute top-4 left-4 w-10 h-10 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black/90 text-white z-10 focus:outline-none focus:ring-2 focus:ring-white'
-                    aria-label='View fullscreen'
-                  >
-                    <Maximize2 className='h-5 w-5' />
-                  </motion.button>
-
-                  {/* Image Counter */}
-                  <div className='absolute bottom-4 right-4 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm'>
-                    {currentImageIndex + 1} / {allImages.length}
-                  </div>
                 </div>
-
-                {/* Image Thumbnails */}
+                {/* Thumbnails */}
                 {allImages.length > 1 && (
-                  <div className='flex gap-3 mt-6 overflow-x-auto pb-2'>
+                  <div className='flex gap-2 sm:gap-3 mt-4 sm:mt-6 overflow-x-auto pb-2 -mx-2 px-2 sm:mx-0 sm:px-0'>
                     {allImages.map((image, index) => (
                       <motion.button
                         key={index}
@@ -422,7 +419,7 @@ export default function ProjectDetailPage() {
                           setImageLoading(true);
                           setCurrentImageIndex(index);
                         }}
-                        className={`flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        className={`flex-shrink-0 w-16 h-10 sm:w-24 sm:h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                           index === currentImageIndex
                             ? 'border-blue-500 shadow-lg scale-105'
                             : 'border-border/30 hover:border-border'
@@ -440,9 +437,8 @@ export default function ProjectDetailPage() {
                   </div>
                 )}
               </div>
-
               {/* Project Info Sidebar */}
-              <div className='space-y-4'>
+              <div className='space-y-4 mt-8 lg:mt-0'>
                 <motion.div
                   whileHover={{ y: -2 }}
                   transition={{ duration: 0.3 }}
@@ -953,19 +949,19 @@ export default function ProjectDetailPage() {
                     whileHover={{ scale: 1.1, x: -4 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={prevImage}
-                    className='absolute left-4 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 text-white'
+                    className='absolute left-4 top-1/2 transform -translate-y-1/2 size-10 md:size-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 text-black border border-gray-200'
                     aria-label='Previous image'
                   >
-                    <ChevronLeft className='h-8 w-8' />
+                    <ChevronLeft className='size-6 md:size-8' />
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.1, x: 4 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={nextImage}
-                    className='absolute right-4 top-1/2 transform -translate-y-1/2 size-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 text-white'
+                    className='absolute right-4 top-1/2 transform -translate-y-1/2 size-10 md:size-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 text-black border border-gray-200'
                     aria-label='Next image'
                   >
-                    <ChevronRight className='h-8 w-8' />
+                    <ChevronRight className='size-6 md:size-8' />
                   </motion.button>
                 </>
               )}

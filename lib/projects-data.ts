@@ -186,7 +186,7 @@ export const projectsData: Project[] = [
     images: [
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028179/yst_1_luowou.png',
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028181/yst_2_xt9ody.png',
-      'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028187/yst_3_nihjbs.png',
+
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028589/yst_4_hcvp5m.png',
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028726/yst_5_wqi1gv.png',
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028176/yst_6_pmtbgj.png',
