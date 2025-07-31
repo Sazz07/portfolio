@@ -61,11 +61,11 @@ export const projectsData: Project[] = [
     category: 'AI Platform',
     userId: 'user-1',
     year: '2024',
-    duration: '8 months',
-    role: 'Lead Frontend Developer',
+    duration: 'Ongoing',
+    role: 'Full-Stack Developer',
     slug: 'neduai-career-planning',
-    createdAt: '2024-03-01T00:00:00.000Z',
-    updatedAt: '2024-11-01T00:00:00.000Z',
+    createdAt: '2024-01-01T00:00:00.000Z',
+    updatedAt: '2024-12-01T00:00:00.000Z',
   },
   {
     id: '2',
@@ -104,11 +104,11 @@ export const projectsData: Project[] = [
     category: 'Dashboard',
     userId: 'user-1',
     year: '2023',
-    duration: '4 months',
+    duration: 'Ongoing',
     role: 'Frontend Developer',
     slug: 'pro-hr-dashboard',
     createdAt: '2023-01-01T00:00:00.000Z',
-    updatedAt: '2023-05-01T00:00:00.000Z',
+    updatedAt: '2024-12-01T00:00:00.000Z',
   },
   {
     id: '3',
@@ -151,12 +151,12 @@ export const projectsData: Project[] = [
     categoryId: 'ecommerce',
     category: 'E-commerce',
     userId: 'user-1',
-    year: '2023',
-    duration: '6 months',
-    role: 'Frontend Lead',
+    year: '2023-2024',
+    duration: '1 year',
+    role: 'Frontend Developer',
     slug: 'pharmik-ecommerce',
-    createdAt: '2023-04-01T00:00:00.000Z',
-    updatedAt: '2023-10-01T00:00:00.000Z',
+    createdAt: '2023-01-01T00:00:00.000Z',
+    updatedAt: '2024-01-01T00:00:00.000Z',
   },
   {
     id: '4',
@@ -186,7 +186,6 @@ export const projectsData: Project[] = [
     images: [
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028179/yst_1_luowou.png',
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028181/yst_2_xt9ody.png',
-
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028589/yst_4_hcvp5m.png',
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028726/yst_5_wqi1gv.png',
       'https://res.cloudinary.com/duxjoty1l/image/upload/v1753028176/yst_6_pmtbgj.png',
@@ -198,12 +197,12 @@ export const projectsData: Project[] = [
     categoryId: 'client-project',
     category: 'Client-Project',
     userId: 'user-1',
-    year: '2025',
-    duration: '2 months',
+    year: '2024',
+    duration: '6 months',
     role: 'Frontend Developer',
     slug: 'youngsprouts-therapy-website',
-    createdAt: '2025-05-01T00:00:00.000Z',
-    updatedAt: '2025-07-01T00:00:00.000Z',
+    createdAt: '2024-01-01T00:00:00.000Z',
+    updatedAt: '2024-06-01T00:00:00.000Z',
   },
   {
     id: '5',
@@ -242,11 +241,11 @@ export const projectsData: Project[] = [
     category: 'Client-Project',
     userId: 'user-1',
     year: '2024',
-    duration: '1 month',
+    duration: '3 months',
     role: 'Frontend Developer',
     slug: 'si3-website',
-    createdAt: '2024-06-01T00:00:00.000Z',
-    updatedAt: '2024-07-01T00:00:00.000Z',
+    createdAt: '2024-03-01T00:00:00.000Z',
+    updatedAt: '2024-06-01T00:00:00.000Z',
   },
   {
     id: '6',
@@ -285,11 +284,11 @@ export const projectsData: Project[] = [
     category: 'Client-Project',
     userId: 'user-1',
     year: '2023',
-    duration: '2 months',
+    duration: '4 months',
     role: 'Frontend Developer',
     slug: 'ecodure-flooring-website',
-    createdAt: '2023-07-01T00:00:00.000Z',
-    updatedAt: '2023-09-01T00:00:00.000Z',
+    createdAt: '2023-08-01T00:00:00.000Z',
+    updatedAt: '2023-12-01T00:00:00.000Z',
   },
   {
     id: '7',
@@ -324,12 +323,12 @@ export const projectsData: Project[] = [
     categoryId: 'dashboard',
     category: 'Dashboard',
     userId: 'user-1',
-    year: '2024',
-    duration: '6 months',
-    role: 'Full-Stack Developer',
+    year: '2023',
+    duration: '8 months',
+    role: 'Frontend Developer',
     slug: 'cardi-check-telehealth',
-    createdAt: '2024-01-01T00:00:00.000Z',
-    updatedAt: '2024-07-01T00:00:00.000Z',
+    createdAt: '2023-01-01T00:00:00.000Z',
+    updatedAt: '2023-08-01T00:00:00.000Z',
   },
   {
     id: '8',
@@ -368,16 +367,16 @@ export const projectsData: Project[] = [
     ],
     liveUrl: 'https://bookoria.vercel.app/',
     githubUrl: 'https://github.com/Sazz07/bookoria-client',
-    status: 'COMPLETED',
+    status: 'ONGOING',
     categoryId: 'ecommerce',
     category: 'E-commerce',
     userId: 'user-1',
-    year: '2023',
-    duration: '4 months',
+    year: '2025',
+    duration: 'Ongoing',
     role: 'Full-Stack Developer',
     slug: 'bookoria-online-bookstore',
-    createdAt: '2023-08-01T00:00:00.000Z',
-    updatedAt: '2023-12-01T00:00:00.000Z',
+    createdAt: '2025-01-01T00:00:00.000Z',
+    updatedAt: '2025-01-30T00:00:00.000Z',
   },
 ];
 
@@ -423,7 +422,6 @@ export function getRelatedProjects(
 
 export function getAllTechnologies(): string[] {
   const allTech = new Set<string>();
-
   projectsData.forEach((project) => {
     Object.values(project.techStack).forEach((techArray) => {
       if (Array.isArray(techArray)) {
@@ -431,7 +429,6 @@ export function getAllTechnologies(): string[] {
       }
     });
   });
-
   return Array.from(allTech).sort();
 }
 
@@ -460,7 +457,6 @@ export function getProjectStats() {
   const completedProjects = projectsData.filter(
     (p) => p.status === 'COMPLETED'
   ).length;
-
   return {
     total: totalProjects,
     ongoing: ongoingProjects,
