@@ -603,7 +603,7 @@ export default function ProjectDetailPage() {
                   <CardContent>
                     <div className='space-y-8'>
                       {Object.entries(project.techStack)
-                        .filter(([_, technologies]) => technologies.length > 0)
+                        .filter(([, technologies]) => technologies.length > 0)
                         .map(([category, technologies]) => (
                           <div key={category} className='space-y-4'>
                             <h4 className='font-semibold text-lg capitalize flex items-center gap-2'>

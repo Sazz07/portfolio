@@ -270,7 +270,7 @@ export default function NotFound() {
                     className='group bg-transparent'
                   >
                     <Link
-                      href='https://www.linkedin.com/in/md-sazzad-hossain-sazz'
+                      href='https://www.linkedin.com/in/md-sazzad-hossain-996b84347'
                       target='_blank'
                     >
                       <FaLinkedin className='h-4 w-4 mr-2 group-hover:scale-110 transition-transform' />

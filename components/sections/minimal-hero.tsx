@@ -172,7 +172,7 @@ export function MinimalHero() {
               },
               {
                 icon: FaLinkedin,
-                href: 'https://www.linkedin.com/in/md-sazzad-hossain-sazz',
+                href: 'https://www.linkedin.com/in/md-sazzad-hossain-996b84347',
                 label: 'LinkedIn',
               },
               {
