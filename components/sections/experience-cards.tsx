@@ -9,7 +9,7 @@ const experiences = [
     title: 'Software Developer',
     company: 'Tutors Finland Oy',
     location: 'Helsinki, Finland',
-    period: 'March 2024 – July 2025',
+    period: 'March 2024 – August 2025',
     type: 'Remote',
     description:
       'An AI-powered career planning platform serving 10,000+ users.',
@@ -34,7 +34,7 @@ const experiences = [
     title: 'Frontend Developer',
     company: 'Repliq Limited',
     location: 'Dhaka, Bangladesh',
-    period: 'April 2023 – March 2024',
+    period: 'March 2023 – March 2024',
     type: 'Full-time',
     description:
       'Developed high-impact frontend solutions for pharmaceutical e-commerce and HR management platforms.',
