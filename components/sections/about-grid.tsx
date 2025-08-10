@@ -83,11 +83,13 @@ export function AboutGrid() {
                       Currently
                     </h3>
                     <p className='text-muted-foreground text-sm leading-relaxed'>
-                      Software Developer at Tutors Finland Oy, working on
-                      AI-powered career planning platforms that help thousands
-                      of users discover their potential.
+                      Exploring new opportunities in full-stack development
+                      while building open-source projects and deepening my
+                      expertise in modern web technologies and scalable
+                      application design.
                     </p>
                   </div>
+
                   <div>
                     <h3 className='font-medium mb-2 text-foreground'>
                       Location

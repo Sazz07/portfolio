@@ -9,7 +9,7 @@ const experiences = [
     title: 'Software Developer',
     company: 'Tutors Finland Oy',
     location: 'Helsinki, Finland',
-    period: 'March 2024 – Present',
+    period: 'March 2024 – July 2025',
     type: 'Remote',
     description:
       'An AI-powered career planning platform serving 10,000+ users.',
