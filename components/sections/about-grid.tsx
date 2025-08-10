@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Award, Users, Globe, Coffee } from 'lucide-react';
 
 const stats = [
-  { icon: Award, label: 'Years Experience', value: '2+' },
+  { icon: Award, label: 'Years Experience', value: '2.5+' },
   { icon: Users, label: 'Projects Completed', value: '20+' },
   { icon: Globe, label: 'Countries Worked', value: '2' },
   { icon: Coffee, label: 'Cups of Coffee', value: '∞' },
